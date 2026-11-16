@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nanibuu Atelier · Bolsos y accesorios de crochet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--crema:#FDFBF7;--tierra:#8B5A2B;--arena:#D4A373;--rosa:#E8C4C4;--rosa2:#F6E6E4;--texto:#2C2C2C;--radio:16px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Poppins',sans-serif;background:var(--crema);color:var(--texto);line-height:1.6}
+h1,h2,h3{font-family:'Playfair Display',serif;font-weight:700;color:var(--tierra)}
+button{font-family:inherit;cursor:pointer;border:0}
+img{max-width:100%;display:block}
+.btn{background:var(--tierra);color:#fff;padding:.8rem 1.6rem;border-radius:50px;font-size:.95rem;font-weight:500;transition:.2s;display:inline-block;text-decoration:none}
+.btn:hover{background:#6f4520;transform:translateY(-1px)}
+.btn.sec{background:var(--rosa);color:var(--tierra)}
+/* Carrito flotante */
+#btnCarrito{position:fixed;top:14px;right:14px;z-index:50;background:var(--tierra);color:#fff;width:54px;height:54px;border-radius:50%;font-size:1.5rem;box-shadow:0 4px 14px #0003}
+#contador{position:absolute;top:-4px;right:-4px;background:var(--rosa);color:var(--tierra);font-size:.75rem;font-weight:600;min-width:22px;height:22px;border-radius:11px;display:flex;align-items:center;justify-content:center}
+/* Hero */
+.hero{text-align:center;padding:4.5rem 1.2rem 3rem;background:linear-gradient(180deg,var(--rosa2),var(--crema))}
+.hero small{letter-spacing:.3em;text-transform:uppercase;color:var(--arena);font-size:.75rem}
+.hero h1{font-size:clamp(2.4rem,9vw,4.2rem);margin:.4rem 0}
+.hero p{max-width:480px;margin:0 auto 1.6rem;font-weight:300}
+.evento{margin:2rem auto 0;max-width:560px;background:#fff;border:2px dashed var(--arena);border-radius:var(--radio);padding:1rem 1.2rem;font-size:.92rem}
+.evento b{color:var(--tierra);font-family:'Playfair Display',serif;font-size:1.05rem;display:block}
+/* Catálogo */
+section.cat{max-width:1100px;margin:0 auto;padding:2.5rem 1.1rem 4rem}
+section.cat h2{text-align:center;font-size:2rem;margin-bottom:1.6rem}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.9rem}
+@media(min-width:800px){.grid{grid-template-columns:repeat(4,1fr);gap:1.4rem}}
+.card{background:#fff;border-radius:var(--radio);overflow:hidden;box-shadow:0 2px 12px #8b5a2b14;display:flex;flex-direction:column;cursor:pointer;transition:.25s}
+.card:hover{transform:translateY(-4px);box-shadow:0 8px 20px #8b5a2b26}
+.card img{aspect-ratio:1;object-fit:cover;width:100%}
+.card div{padding:.8rem .9rem 1rem;display:flex;flex-direction:column;gap:.15rem;flex:1}
+.ref{font-size:.7rem;color:var(--arena);letter-spacing:.08em}
+.card h3{font-size:1.05rem;line-height:1.25}
+.card .desc{font-size:.78rem;font-weight:300;flex:1}
+.precio{font-weight:600;color:var(--tierra)}
+.card .btn{margin-top:.5rem;text-align:center;padding:.55rem;font-size:.85rem}
+/* Modal y panel */
+.fondo{position:fixed;inset:0;background:#2c2c2c99;z-index:60;display:none;align-items:center;justify-content:center;padding:.8rem}
+.fondo.abierto{display:flex}
+.modal{background:var(--crema);border-radius:20px;max-width:900px;width:100%;max-height:94vh;overflow:auto;position:relative;display:grid;grid-template-columns:1fr}
+@media(min-width:760px){.modal{grid-template-columns:1fr 1fr}}
+.cerrar{position:absolute;top:10px;right:10px;z-index:3;background:#fff;width:38px;height:38px;border-radius:50%;font-size:1.2rem;color:var(--tierra);box-shadow:0 2px 8px #0002}
+.carrusel{position:relative;background:#fff}
+.carrusel>img{aspect-ratio:1;object-fit:cover;width:100%}
+.flecha{position:absolute;top:42%;background:#fffd;width:38px;height:38px;border-radius:50%;font-size:1.3rem;color:var(--tierra)}
+.flecha.izq{left:8px}.flecha.der{right:8px}
+.minis{display:flex;gap:.5rem;padding:.6rem;overflow-x:auto}
+.minis img{width:58px;height:58px;object-fit:cover;border-radius:10px;opacity:.55;border:2px solid transparent;cursor:pointer}
+.minis img.act{opacity:1;border-color:var(--tierra)}
+.info{padding:1.4rem 1.3rem 1.6rem;display:flex;flex-direction:column;gap:.6rem}
+.info h2{font-size:1.7rem;line-height:1.2}
+.info .precio{font-size:1.4rem}
+.info p{font-size:.9rem;font-weight:300}
+.datos{font-size:.85rem;background:var(--rosa2);border-radius:12px;padding:.7rem .9rem}
+.cant{display:inline-flex;align-items:center;border:1.5px solid var(--arena);border-radius:50px;overflow:hidden}
+.cant button{background:none;width:36px;height:36px;font-size:1.2rem;color:var(--tierra)}
+.cant span{min-width:32px;text-align:center;font-weight:500}
+.fila-comprar{display:flex;gap:.8rem;align-items:center;flex-wrap:wrap;margin-top:.4rem}
+/* Carrito */
+#fondoCarrito{justify-content:flex-end;padding:0;align-items:stretch}
+.panel{background:var(--crema);width:100%;max-width:440px;overflow:auto;padding:1.2rem 1.1rem 2rem;position:relative}
+.panel h2{font-size:1.6rem;margin-bottom:.8rem}
+.item{display:grid;grid-template-columns:64px 1fr auto;gap:.7rem;align-items:center;padding:.7rem 0;border-bottom:1px solid #8b5a2b22}
+.item img{width:64px;height:64px;object-fit:cover;border-radius:10px}
+.item h4{font-size:.9rem;font-weight:500;line-height:1.25}
+.item .cant button{width:30px;height:30px}
+.item .cant{margin-top:.3rem}
+.quitar{background:none;color:#a33;font-size:1.1rem}
+.total{display:flex;justify-content:space-between;font-size:1.2rem;font-weight:600;color:var(--tierra);padding:1rem 0}
+.vacio{text-align:center;padding:2rem 0;color:#888}
+form label{display:block;font-size:.8rem;font-weight:500;margin:.7rem 0 .2rem}
+form input,form select{width:100%;padding:.7rem .8rem;border:1.5px solid var(--arena);border-radius:12px;background:#fff;font-family:inherit;font-size:.95rem}
+form input:focus,form select:focus{outline:2px solid var(--rosa);border-color:var(--tierra)}
+#bloqueEnvio{display:none}
+#error{color:#a33;font-size:.85rem;margin-top:.8rem;min-height:1.2em}
+#enviar{width:100%;margin-top:.6rem;background:#25a244;font-size:1rem;padding:.95rem}
+#enviar:hover{background:#1e8a39}
+footer{text-align:center;padding:2rem 1rem;font-size:.8rem;color:var(--arena)}
+</style>
+</head>
+<body>
+
+<button id="btnCarrito" aria-label="Abrir carrito">🛍<span id="contador">0</span></button>
+
+<header class="hero">
+  <small>Hecho a mano · San Fernando</small>
+  <h1>Nanibuu Atelier</h1>
+  <p>Cada punto cuenta, y cada bolso tiene su cuento. Bolsos y accesorios de crochet tejidos a mano, ovillo a ovillo.</p>
+  <a href="#coleccion" class="btn">Ver Colección</a>
+  <div class="evento">
+    <b>🧶 Aquí no hay enredos</b>
+    Solo buenos puntos, mucho cariño y cero prisas.
+  </div>
+</header>
+
+<section class="cat" id="coleccion">
+  <h2>La Colección</h2>
+  <div class="grid" id="grid"></div>
+</section>
+
+<footer>© Nanibuu Atelier · Hecho a mano con ♥ en San Fernando</footer>
+
+<!-- Modal producto -->
+<div class="fondo" id="fondoModal"><div class="modal" id="modal"></div></div>
+
+<!-- Carrito -->
+<div class="fondo" id="fondoCarrito">
+  <div class="panel">
+    <button class="cerrar" id="cerrarCarrito" aria-label="Cerrar">✕</button>
+    <h2>Tu carrito</h2>
+    <div id="items"></div>
+    <div class="total"><span>Total</span><span id="total">0,00 €</span></div>
+    <form id="form" novalidate>
+      <label>Nombre y apellidos</label>
+      <input id="nombre" autocomplete="name">
+      <label>Teléfono de contacto</label>
+      <input id="telefono" type="tel" autocomplete="tel">
+      <label>Tipo de entrega</label>
+      <select id="entrega">
+        <option>Envío a domicilio</option>
+        <option>Recogida en mano (San Fernando)</option>
+      </select>
+      <div id="bloqueEnvio" style="display:block">
+        <label>Dirección completa</label>
+        <input id="direccion" autocomplete="street-address">
+        <label>Código postal</label>
+        <input id="cp" inputmode="numeric" autocomplete="postal-code">
+        <label>Ciudad</label>
+        <input id="ciudad" autocomplete="address-level2">
+      </div>
+      <label>Método de pago preferido</label>
+      <select id="pago">
+        <option>Bizum</option>
+        <option>Efectivo / Transferencia</option>
+      </select>
+      <div id="error"></div>
+      <button type="submit" class="btn" id="enviar">Enviar Pedido por WhatsApp</button>
+    </form>
+  </div>
+</div>
+
+<script>
+// === CONFIGURACIÓN DE MI TIENDA ===
+
+// 1) Tu WhatsApp: pon tu número con el 34 delante, SIN espacios y SIN el símbolo +
+//    Ejemplo: si tu móvil es 612 345 678 → "34612345678"
+const MI_WHATSAPP = "34600000000";
+
+// 2) Tus productos. Para añadir uno nuevo, copia un bloque { ... }, pégalo con una coma
+//    detrás del anterior y cambia los datos. Para borrar uno, elimina su bloque entero.
+//    - id: número único (1, 2, 3...)   - ref: código único (NAN-001...)
+//    - precio: número con punto decimal (35.00)
+//    - imagenes: lista de URLs de tus fotos, entre comillas y separadas por comas.
+//      (Ahora hay fotos de muestra; sustitúyelas por las tuyas, p. ej. "fotos/luna1.jpg")
+const MIS_PRODUCTOS = [
+  {
+    id: 1,
+    ref: "NAN-001",
+    nombre: "Bolso Bandolera Luna",
+    precio: 38.00,
+    descripcionCorta: "Bandolera pequeña con cierre de botón de madera.",
+    descripcionLarga: "Bolso bandolera tejido íntegramente a mano en punto tupido, con forro interior de algodón y cierre de botón de madera. Ideal para el día a día: caben móvil, cartera y llaves con estilo.",
+    medidas: "20 x 16 x 6 cm · Asa regulable hasta 120 cm",
+    materiales: "Hilo de algodón 100% · Forro de algodón · Botón de madera",
+    imagenes: [foto("Luna · frontal", "#D4A373"), foto("Luna · detalle", "#C48F5E"), foto("Luna · interior", "#B97A56")]
+  },
+  {
+    id: 2,
+    ref: "NAN-002",
+    nombre: "Bolso Bucket Alma",
+    precio: 45.00,
+    descripcionCorta: "Bolso saco con cordón y borlas, muy boho.",
+    descripcionLarga: "Bolso tipo saco con cordón de cierre y borlas artesanales. Su estructura blandita se adapta a todo lo que necesites llevar. Una pieza única con aire bohemio.",
+    medidas: "24 x 28 cm · Asa de 55 cm",
+    materiales: "Hilo de algodón mercerizado · Cordón de algodón",
+    imagenes: [foto("Alma · frontal", "#E8C4C4"), foto("Alma · borlas", "#DDB0B0"), foto("Alma · puesto", "#D49C9C")]
+  },
+  {
+    id: 3,
+    ref: "NAN-003",
+    nombre: "Tote Playero Mar",
+    precio: 52.00,
+    descripcionCorta: "Capazo grande de rafia crochet para la playa.",
+    descripcionLarga: "Capazo amplio y resistente tejido en rafia, perfecto para la playa y la compra. Asas reforzadas y forma estructurada que aguanta el peso sin deformarse.",
+    medidas: "40 x 32 x 14 cm · Asas de 30 cm",
+    materiales: "Rafia natural · Asas de cuero vegano",
+    imagenes: [foto("Mar · frontal", "#8B5A2B"), foto("Mar · lateral", "#9C6B3A"), foto("Mar · asas", "#7A4C22")]
+  },
+  {
+    id: 4,
+    ref: "NAN-004",
+    nombre: "Neceser Brisa",
+    precio: 18.50,
+    descripcionCorta: "Neceser con cremallera, forrado y lavable.",
+    descripcionLarga: "Neceser tejido a mano con cremallera y forro impermeable. Perfecto para maquillaje, cables o como estuche grande. Un detalle ideal para regalar.",
+    medidas: "22 x 13 x 8 cm",
+    materiales: "Hilo de algodón · Cremallera metálica · Forro impermeable",
+    imagenes: [foto("Brisa · frontal", "#C9B79C"), foto("Brisa · abierto", "#BAA685")]
+  }
+];
+
+// === FIN DE LA CONFIGURACIÓN (a partir de aquí no hace falta tocar nada) ===
+
+// Genera una foto de muestra (borra esta función si usas solo tus fotos)
+function foto(texto, color){
+  const s = `<svg xmlns='http://www.w3.org/2000/svg' width='800' height='800'><rect width='800' height='800' fill='${color}'/><circle cx='400' cy='330' r='120' fill='none' stroke='#ffffff88' stroke-width='10' stroke-dasharray='14 10'/><text x='400' y='560' font-family='Georgia,serif' font-size='42' fill='#fff' text-anchor='middle'>${texto}</text></svg>`;
+  return 'data:image/svg+xml;utf8,' + encodeURIComponent(s);
+}
+
+const $ = id => document.getElementById(id);
+const eur = n => n.toFixed(2).replace('.', ',') + ' €';
+let carrito = [];
+try { carrito = JSON.parse(localStorage.getItem('nanibuu_carrito') || '[]'); } catch(e){}
+carrito = carrito.filter(l => MIS_PRODUCTOS.some(p => p.id === l.id));
+const guardar = () => { try { localStorage.setItem('nanibuu_carrito', JSON.stringify(carrito)); } catch(e){} };
+const prod = id => MIS_PRODUCTOS.find(p => p.id === id);
+
+// Catálogo
+$('grid').innerHTML = MIS_PRODUCTOS.map(p => `
+  <article class="card" onclick="abrirProducto(${p.id})">
+    <img src="${p.imagenes[0]}" alt="${p.nombre}" loading="lazy">
+    <div>
+      <span class="ref">${p.ref}</span>
+      <h3>${p.nombre}</h3>
+      <span class="desc">${p.descripcionCorta}</span>
+      <span class="precio">${eur(p.precio)}</span>
+      <button class="btn">Ver producto</button>
+    </div>
+  </article>`).join('');
+
+// Modal de producto
+let pActual, fActual = 0, cantidad = 1;
+function abrirProducto(id){
+  pActual = prod(id); fActual = 0; cantidad = 1;
+  pintarModal();
+  $('fondoModal').classList.add('abierto');
+}
+function pintarModal(){
+  const p = pActual, multi = p.imagenes.length > 1;
+  $('modal').innerHTML = `
+    <button class="cerrar" onclick="cerrarModal()" aria-label="Cerrar">✕</button>
+    <div class="carrusel">
+      <img src="${p.imagenes[fActual]}" alt="${p.nombre}">
+      ${multi ? `<button class="flecha izq" onclick="mover(-1)">‹</button><button class="flecha der" onclick="mover(1)">›</button>` : ''}
+      <div class="minis">${p.imagenes.map((u,i) => `<img src="${u}" class="${i===fActual?'act':''}" onclick="irFoto(${i})" alt="Foto ${i+1}">`).join('')}</div>
+    </div>
+    <div class="info">
+      <span class="ref">Ref: ${p.ref}</span>
+      <h2>${p.nombre}</h2>
+      <span class="precio">${eur(p.precio)}</span>
+      <p>${p.descripcionLarga}</p>
+      <div class="datos"><b>Medidas:</b> ${p.medidas}<br><b>Materiales:</b> ${p.materiales}</div>
+      <div class="fila-comprar">
+        <div class="cant"><button onclick="cambiarCant(-1)">−</button><span>${cantidad}</span><button onclick="cambiarCant(1)">+</button></div>
+        <button class="btn" onclick="anadir()">Añadir al carrito</button>
+      </div>
+    </div>`;
+}
+function mover(d){ const n = pActual.imagenes.length; fActual = (fActual + d + n) % n; pintarModal(); }
+function irFoto(i){ fActual = i; pintarModal(); }
+function cambiarCant(d){ cantidad = Math.max(1, cantidad + d); pintarModal(); }
+function cerrarModal(){ $('fondoModal').classList.remove('abierto'); }
+function anadir(){
+  const l = carrito.find(x => x.id === pActual.id);
+  l ? l.cant += cantidad : carrito.push({id: pActual.id, cant: cantidad});
+  guardar(); pintarCarrito(); cerrarModal(); abrirCarrito();
+}
+
+// Carrito
+function pintarCarrito(){
+  const total = carrito.reduce((s,l) => s + prod(l.id).precio * l.cant, 0);
+  $('contador').textContent = carrito.reduce((s,l) => s + l.cant, 0);
+  $('total').textContent = eur(total);
+  $('items').innerHTML = carrito.length ? carrito.map(l => {
+    const p = prod(l.id);
+    return `<div class="item">
+      <img src="${p.imagenes[0]}" alt="">
+      <div><h4>${p.nombre}</h4><span class="ref">Ref: ${p.ref}</span><br>
+        <span class="precio">${eur(p.precio * l.cant)}</span>
+        <div class="cant"><button onclick="cantLinea(${l.id},-1)">−</button><span>${l.cant}</span><button onclick="cantLinea(${l.id},1)">+</button></div>
+      </div>
+      <button class="quitar" onclick="quitar(${l.id})" aria-label="Eliminar">🗑</button>
+    </div>`;
+  }).join('') : '<div class="vacio">Tu carrito está vacío 🧶</div>';
+}
+function cantLinea(id, d){ const l = carrito.find(x => x.id === id); l.cant = Math.max(1, l.cant + d); guardar(); pintarCarrito(); }
+function quitar(id){ carrito = carrito.filter(x => x.id !== id); guardar(); pintarCarrito(); }
+function abrirCarrito(){ $('fondoCarrito').classList.add('abierto'); }
+$('btnCarrito').onclick = abrirCarrito;
+$('cerrarCarrito').onclick = () => $('fondoCarrito').classList.remove('abierto');
+$('fondoCarrito').onclick = e => { if (e.target.id === 'fondoCarrito') $('fondoCarrito').classList.remove('abierto'); };
+$('fondoModal').onclick = e => { if (e.target.id === 'fondoModal') cerrarModal(); };
+document.addEventListener('keydown', e => { if (e.key === 'Escape'){ cerrarModal(); $('fondoCarrito').classList.remove('abierto'); } });
+
+// Mostrar/ocultar dirección
+$('entrega').onchange = () => { $('bloqueEnvio').style.display = $('entrega').value.startsWith('Envío') ? 'block' : 'none'; };
+
+// Enviar por WhatsApp
+$('form').onsubmit = e => {
+  e.preventDefault();
+  const v = id => $(id).value.trim(), err = m => { $('error').textContent = m; };
+  const envio = $('entrega').value.startsWith('Envío');
+  if (!carrito.length) return err('Añade al menos un producto al carrito.');
+  if (!v('nombre')) return err('Escribe tu nombre y apellidos.');
+  if (v('telefono').replace(/\D/g,'').length < 9) return err('Escribe un teléfono válido.');
+  if (envio && (!v('direccion') || !v('cp') || !v('ciudad'))) return err('Completa dirección, código postal y ciudad.');
+  err('');
+  const total = carrito.reduce((s,l) => s + prod(l.id).precio * l.cant, 0);
+  const lineas = carrito.map(l => { const p = prod(l.id); return `• ${l.cant}x ${p.nombre} (Ref: ${p.ref}) - ${eur(p.precio * l.cant)}`; }).join('\n');
+  const msg = `¡Hola Nanibuu Atelier! 👋\nQuiero hacer el siguiente pedido:\n\n🧶 *PEDIDO*\n${lineas}\n\n💰 *TOTAL A PAGAR: ${eur(total)}*\n\n👤 *DATOS DEL CLIENTE*\nNombre: ${v('nombre')}\nTeléfono: ${v('telefono')}\n📦 Entrega: ${$('entrega').value}\n` +
+    (envio ? `🏠 Dirección: ${v('direccion')}, ${v('cp')} ${v('ciudad')}\n` : '') +
+    `💳 Pago: ${$('pago').value}\n\n¡Muchas gracias! ✨`;
+  window.open(`https://wa.me/${MI_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
+};
+
+pintarCarrito();
+</script>
+</body>
+</html>
